@@ -2,6 +2,9 @@ package com.example.rbcassignment.model;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.rbc.rbcaccountlibrary.Account;
 import com.rbc.rbcaccountlibrary.AccountProvider;
 import com.rbc.rbcaccountlibrary.AccountType;
@@ -94,7 +97,9 @@ public class BankAccountProvider {
     }
 
     private List<Transaction> getTransactionList(Account account) throws Exception {
-        return AccountProvider.INSTANCE.getTransactions(account.getNumber());
+        // TODO: Fix being unable to get transaction error
+//        return AccountProvider.INSTANCE.getTransactions(account.getNumber());
+        return new ArrayList<>();
     }
 
     private List<Transaction> getAdditionalTransactionList(Account account) throws Exception {
@@ -110,6 +115,15 @@ public class BankAccountProvider {
             this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
         }
         return this.chequingAccList;
+    }
+
+    public LiveData<List<BankAccount>> getLiveChequingAccounts() throws Exception {
+        MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
+        if (this.chequingAccList == null) {
+            this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
+        }
+        data.setValue(this.chequingAccList);
+        return data;
     }
 
     public List<CreditCardBankAccount> getCreditCardAccountList() throws Exception {
