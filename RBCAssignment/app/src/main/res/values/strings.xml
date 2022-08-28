@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bank Accounts and Transactions</string>
+    <string name="chequing">Chequing</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="loan">Loan</string>
+    <string name="mortgage">Mortgage</string>
 </resources>
