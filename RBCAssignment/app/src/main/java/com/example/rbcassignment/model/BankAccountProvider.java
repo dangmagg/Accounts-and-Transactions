@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.rbc.rbcaccountlibrary.Account;
 import com.rbc.rbcaccountlibrary.AccountProvider;
 import com.rbc.rbcaccountlibrary.AccountType;
-import com.rbc.rbcaccountlibrary.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +20,6 @@ public class BankAccountProvider {
     private List<CreditCardBankAccount> creditCardAccList;
     private List<BankAccount> loanAccList;
     private List<BankAccount> mortgageAccList;
-
-//    public BankAccountProvider() throws Exception {
-//        initializeBankAccounts();
-//    }
 
 //    private void initializeBankAccounts() throws Exception {
 //        Log.i("ACCOUNT LIST", this.accountList.toString());
@@ -53,7 +48,7 @@ public class BankAccountProvider {
      * @param type
      * @return
      */
-    private List<BankAccount> getTypeOfAccountList(AccountType type) throws Exception {
+    private List<BankAccount> getTypeOfAccountList(AccountType type) {
         List<BankAccount> list = new ArrayList<>();
         for (Account account : this.accountList) {
 //            Log.i("ACCOUNT", account.toString());
@@ -64,59 +59,19 @@ public class BankAccountProvider {
         return list;
     }
 
-    /**
-     * Given an Account, return a BankAccount that contains its transaction list data.
-     * @param account
-     * @return
-     * @throws Exception
-     */
-//    private BankAccount createBankAccount(Account account) throws Exception {
-//        BankAccount bankAccount;
-//        // Find transaction list for given account
-//        List<Transaction> transList = AccountProvider.INSTANCE
-//                .getTransactions(account.getNumber());
-//        // Credit Card accounts have an additional transaction list
-//        if (isCreditCard(account)) {
-//            List<Transaction> AdditionaltransList = AccountProvider.INSTANCE
-//                    .getAdditionalCreditCardTransactions(account.getNumber());
-//            bankAccount = new CreditCardBankAccount(account, transList, AdditionaltransList);
-//        } else {
-//            bankAccount = new BankAccount(account, transList);
-//        }
-//        return bankAccount;
-//    }
-
-//    private BankAccount createBankAccount(Account account) throws Exception {
-//        return new BankAccount(account);
-//    }
-
-    // TODO: Concurrency?
-//    private CreditCardBankAccount createCreditBankAccount(Account account) throws Exception {
-//        return new CreditCardBankAccount(account);
-//    }
-
-//    private List<Transaction> getTransactionList(Account account) throws Exception {
-//        // TODO: Fix being unable to get transaction error
-////        return AccountProvider.INSTANCE.getTransactions(account.getNumber());
-//        return new ArrayList<>();
-//    }
-
-//    private List<Transaction> getAdditionalTransactionList(Account account) throws Exception {
-//        return AccountProvider.INSTANCE.getAdditionalCreditCardTransactions(account.getNumber());
-//    }
 
     private boolean isCreditCard(Account account) {
         return account.getType() == AccountType.CREDIT_CARD;
     }
 
-    public List<BankAccount> getChequingAccountList() throws Exception {
-        if (this.chequingAccList == null) {
-            this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
-        }
-        return this.chequingAccList;
-    }
+//    public List<BankAccount> getChequingAccountList() throws Exception {
+//        if (this.chequingAccList == null) {
+//            this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
+//        }
+//        return this.chequingAccList;
+//    }
 
-    public LiveData<List<BankAccount>> getLiveChequingAccounts() throws Exception {
+    public LiveData<List<BankAccount>> getLiveChequingAccounts() {
         MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.chequingAccList == null) {
             this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
@@ -125,7 +80,20 @@ public class BankAccountProvider {
         return data;
     }
 
-    public List<CreditCardBankAccount> getCreditCardAccountList() throws Exception {
+//    public List<CreditCardBankAccount> getCreditCardAccountList() throws Exception {
+//        if (this.creditCardAccList == null) {
+//            this.creditCardAccList = new ArrayList<>();
+//            for (Account account : this.accountList) {
+//                if (isCreditCard(account)) {
+//                    this.creditCardAccList.add(new CreditCardBankAccount(account));
+//                }
+//            }
+//        }
+//        return this.creditCardAccList;
+//    }
+
+    public LiveData<List<CreditCardBankAccount>> getCreditCardAccountList() {
+        MutableLiveData<List<CreditCardBankAccount>> data = new MutableLiveData<>();
         if (this.creditCardAccList == null) {
             this.creditCardAccList = new ArrayList<>();
             for (Account account : this.accountList) {
@@ -134,21 +102,40 @@ public class BankAccountProvider {
                 }
             }
         }
-        return this.creditCardAccList;
+        data.setValue(this.creditCardAccList);
+        return data;
     }
 
-    public List<BankAccount> getLoanAccountList() throws Exception {
+//    public List<BankAccount> getLoanAccountList() throws Exception {
+//        if (this.loanAccList == null) {
+//            this.loanAccList = this.getTypeOfAccountList(AccountType.LOAN);
+//        }
+//        return this.loanAccList;
+//    }
+
+    public LiveData<List<BankAccount>> getLoanAccountList() {
+        MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.loanAccList == null) {
             this.loanAccList = this.getTypeOfAccountList(AccountType.LOAN);
         }
-        return this.loanAccList;
+        data.setValue(this.loanAccList);
+        return data;
     }
 
-    public List<BankAccount> getMortgageAccountList() throws Exception {
+//    public List<BankAccount> getMortgageAccountList() throws Exception {
+//        if (this.mortgageAccList == null) {
+//            this.mortgageAccList = this.getTypeOfAccountList(AccountType.MORTGAGE);
+//        }
+//        return this.mortgageAccList;
+//    }
+
+    public LiveData<List<BankAccount>> getMortgageAccountList() {
+        MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.mortgageAccList == null) {
             this.mortgageAccList = this.getTypeOfAccountList(AccountType.MORTGAGE);
         }
-        return this.mortgageAccList;
+        data.setValue(this.mortgageAccList);
+        return data;
     }
 
 }
