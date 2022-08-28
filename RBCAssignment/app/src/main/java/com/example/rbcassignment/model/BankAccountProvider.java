@@ -58,7 +58,7 @@ public class BankAccountProvider {
         for (Account account : this.accountList) {
 //            Log.i("ACCOUNT", account.toString());
             if (account.getType() == type) {
-                list.add(createBankAccount(account));
+                list.add(new BankAccount(account));
             }
         }
         return list;
@@ -86,25 +86,24 @@ public class BankAccountProvider {
 //        return bankAccount;
 //    }
 
-    private BankAccount createBankAccount(Account account) throws Exception {
-        return new BankAccount(account, getTransactionList(account));
-    }
+//    private BankAccount createBankAccount(Account account) throws Exception {
+//        return new BankAccount(account);
+//    }
 
     // TODO: Concurrency?
-    private CreditCardBankAccount createCreditBankAccount(Account account) throws Exception {
-        return new CreditCardBankAccount(account, getTransactionList(account),
-                getAdditionalTransactionList(account));
-    }
+//    private CreditCardBankAccount createCreditBankAccount(Account account) throws Exception {
+//        return new CreditCardBankAccount(account);
+//    }
 
-    private List<Transaction> getTransactionList(Account account) throws Exception {
-        // TODO: Fix being unable to get transaction error
-//        return AccountProvider.INSTANCE.getTransactions(account.getNumber());
-        return new ArrayList<>();
-    }
+//    private List<Transaction> getTransactionList(Account account) throws Exception {
+//        // TODO: Fix being unable to get transaction error
+////        return AccountProvider.INSTANCE.getTransactions(account.getNumber());
+//        return new ArrayList<>();
+//    }
 
-    private List<Transaction> getAdditionalTransactionList(Account account) throws Exception {
-        return AccountProvider.INSTANCE.getAdditionalCreditCardTransactions(account.getNumber());
-    }
+//    private List<Transaction> getAdditionalTransactionList(Account account) throws Exception {
+//        return AccountProvider.INSTANCE.getAdditionalCreditCardTransactions(account.getNumber());
+//    }
 
     private boolean isCreditCard(Account account) {
         return account.getType() == AccountType.CREDIT_CARD;
@@ -131,7 +130,7 @@ public class BankAccountProvider {
             this.creditCardAccList = new ArrayList<>();
             for (Account account : this.accountList) {
                 if (isCreditCard(account)) {
-                    this.creditCardAccList.add(createCreditBankAccount(account));
+                    this.creditCardAccList.add(new CreditCardBankAccount(account));
                 }
             }
         }
