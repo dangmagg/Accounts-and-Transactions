@@ -22,6 +22,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    BankAccountViewModel bankAccountViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,22 +33,24 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
 
         // Livedata
-        BankAccountViewModel bankAccountViewModel = new ViewModelProvider(this)
+        this.bankAccountViewModel = new ViewModelProvider(this)
                 .get(BankAccountViewModel.class);
 
         // Initialize Recycler Views
         RecyclerView chequingRv = findViewById(R.id.chequing_rv);
 
         // Passing values to adapter
-        AccountRVAdapter accountRVAdapter = new AccountRVAdapter(bankAccountViewModel.getChequingData().getValue());
+        AccountRVAdapter chequingRVAdapter = new AccountRVAdapter(this.bankAccountViewModel
+                                                                    .getChequingData()
+                                                                    .getValue());
 
         // Setting layout manager and items for recycler view list
-        chequingRv.setAdapter(accountRVAdapter);
+        chequingRv.setAdapter(chequingRVAdapter);
 
         chequingRv.setLayoutManager(layoutManager);
 
         // TODO: TESTING
-        Log.i("LIVEDATA CHEQ", bankAccountViewModel.getChequingData().getValue().get(0).getAccount().getBalance());
+        Log.i("LIVEDATA CHEQ", this.bankAccountViewModel.getChequingData().getValue().get(0).getAccount().getBalance());
 //        BankAccountProvider a = new BankAccountProvider();
 //        List<BankAccount> c = null;
 //        try {

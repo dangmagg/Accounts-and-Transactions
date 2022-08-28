@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Bank Accounts and Transactions</string>
+    <string name="default_title">Title</string>
+    <string name="default_balance">$0</string>
     <string name="chequing">Chequing</string>
     <string name="credit_card">Credit Card</string>
     <string name="loan">Loan</string>
     <string name="mortgage">Mortgage</string>
+    <string name="latest_transaction">Latest Transactions:</string>
 </resources>
