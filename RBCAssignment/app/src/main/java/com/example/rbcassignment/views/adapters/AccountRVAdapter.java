@@ -16,6 +16,7 @@ import java.util.List;
 public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.AccountViewHolder> {
 
     private List<BankAccount> accountList;
+    private OnAccountClickListener listener;
 
     public AccountRVAdapter(List<BankAccount> accountList) {
         this.accountList = accountList;
@@ -33,15 +34,16 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
     @Override
     public void onBindViewHolder(@NonNull AccountViewHolder holder, int position) {
         BankAccount account = this.accountList.get(position);
-        // Set values to viewHolder
-        holder.accountNameTv.setText(account.getAccount().getName());
-        holder.accountNumTv.setText(account.getAccount().getNumber());
-        holder.accountBalanceTv.setText(displayBalance(account.getAccount().getBalance()));
+        holder.bind(account);
     }
 
     @Override
     public int getItemCount() {
         return this.accountList.size();
+    }
+
+    public void setOnClickListener(OnAccountClickListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -67,5 +69,24 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
             this.accountNumTv = itemView.findViewById(R.id.account_number_tv);
             this.accountBalanceTv = itemView.findViewById(R.id.account_balance_tv);
         }
+
+        /**
+         * Set values to views and the view holders onClickListener
+         */
+        public void bind(BankAccount account) {
+            this.accountNameTv.setText(account.getAccount().getName());
+            this.accountNumTv.setText(account.getAccount().getNumber());
+            this.accountBalanceTv.setText(displayBalance(account.getAccount().getBalance()));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onAccountClick(account);
+                }
+            });
+        }
+    }
+
+    public interface OnAccountClickListener {
+        void onAccountClick(BankAccount account);
     }
 }

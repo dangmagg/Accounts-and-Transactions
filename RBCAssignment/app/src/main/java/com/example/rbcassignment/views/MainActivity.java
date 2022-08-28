@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.rbcassignment.R;
 import com.example.rbcassignment.model.BankAccount;
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         AccountRVAdapter chequingRVAdapter = new AccountRVAdapter(this.bankAccountViewModel
                                                                     .getChequingData()
                                                                     .getValue());
+        chequingRVAdapter.setOnClickListener(account -> {
+            // TODO: Show account details
+            Toast.makeText(getApplicationContext(), account.getAccount().getNumber(), Toast.LENGTH_LONG).show();
+        });
 
         // Setting layout manager and items for recycler view list
         chequingRv.setAdapter(chequingRVAdapter);
