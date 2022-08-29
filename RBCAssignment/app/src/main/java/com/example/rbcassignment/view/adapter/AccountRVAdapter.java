@@ -1,4 +1,4 @@
-package com.example.rbcassignment.views.adapters;
+package com.example.rbcassignment.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rbcassignment.R;
 import com.example.rbcassignment.model.BankAccount;
-import com.example.rbcassignment.viewmodels.BankAccountViewModel;
+import com.example.rbcassignment.viewmodel.BankAccountViewModel;
 
 import java.util.List;
 

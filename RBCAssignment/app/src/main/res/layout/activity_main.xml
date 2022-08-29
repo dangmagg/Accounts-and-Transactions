@@ -6,7 +6,7 @@
     <data>
         <variable
             name="bankAccountViewModel"
-            type="com.example.rbcassignment.viewmodels.BankAccountViewModel" />
+            type="com.example.rbcassignment.viewmodel.BankAccountViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

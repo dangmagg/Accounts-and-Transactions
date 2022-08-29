@@ -1,4 +1,4 @@
-package com.example.rbcassignment.viewmodels;
+package com.example.rbcassignment.viewmodel;
 
 import android.annotation.SuppressLint;
 
@@ -14,9 +14,7 @@ import com.rbc.rbcaccountlibrary.Transaction;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 

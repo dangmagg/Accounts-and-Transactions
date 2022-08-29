@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RBCAssignment"
         tools:targetApi="31">
-        <activity android:name=".views.AccountDetailActivity"
-            android:parentActivityName=".views.MainActivity">
+        <activity android:name=".view.AccountDetailActivity"
+            android:parentActivityName=".view.MainActivity">
         </activity>
         <activity
-            android:name=".views.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

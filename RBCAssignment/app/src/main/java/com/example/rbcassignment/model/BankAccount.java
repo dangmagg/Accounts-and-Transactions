@@ -1,5 +1,7 @@
 package com.example.rbcassignment.model;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -12,7 +14,7 @@ import java.util.List;
 
 public class BankAccount {
 
-    private Account account;
+    private final Account account;
     private List<Transaction> transactionList;
 
     public BankAccount(Account account) {
@@ -31,11 +33,9 @@ public class BankAccount {
                 this.transactionList = AccountProvider.INSTANCE
                         .getTransactions(this.account.getNumber());
             } catch (Exception e) {
+                Log.e("TRANSACTION ERROR", e.getMessage());
                 this.transactionList = new ArrayList<>();
-                data.setValue(this.transactionList);
-                return data;
             }
-//            this.transactionList = new ArrayList<>();
         }
         data.setValue(this.transactionList);
         return data;

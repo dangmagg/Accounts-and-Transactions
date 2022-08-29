@@ -1,4 +1,4 @@
-package com.example.rbcassignment.views;
+package com.example.rbcassignment.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.rbcassignment.R;
-import com.example.rbcassignment.viewmodels.BankAccountViewModel;
-import com.example.rbcassignment.views.adapters.AccountRVAdapter;
+import com.example.rbcassignment.viewmodel.BankAccountViewModel;
+import com.example.rbcassignment.view.adapter.AccountRVAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

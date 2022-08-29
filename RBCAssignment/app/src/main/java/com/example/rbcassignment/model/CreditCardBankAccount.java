@@ -27,10 +27,7 @@ public class CreditCardBankAccount extends BankAccount {
                         .getAdditionalCreditCardTransactions(super.getAccountDetails().getNumber());
             } catch (Exception e) {
                 this.additionalTransactionList = new ArrayList<>();
-                data.setValue(this.additionalTransactionList);
-                return data;
             }
-//            this.additionalTransactionList = new ArrayList<>();
         }
         data.setValue(this.additionalTransactionList);
         return data;

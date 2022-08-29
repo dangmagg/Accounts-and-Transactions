@@ -1,4 +1,4 @@
-package com.example.rbcassignment.views;
+package com.example.rbcassignment.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rbcassignment.R;
-import com.example.rbcassignment.viewmodels.AccountDetailViewModel;
-import com.example.rbcassignment.viewmodels.BankAccountViewModel;
-import com.example.rbcassignment.views.adapters.TransactionRVAdapter;
+import com.example.rbcassignment.viewmodel.AccountDetailViewModel;
+import com.example.rbcassignment.viewmodel.BankAccountViewModel;
+import com.example.rbcassignment.view.adapter.TransactionRVAdapter;
 
 public class AccountDetailActivity extends AppCompatActivity {
 

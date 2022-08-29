@@ -1,4 +1,4 @@
-package com.example.rbcassignment.viewmodels;
+package com.example.rbcassignment.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
