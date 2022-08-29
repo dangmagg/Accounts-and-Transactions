@@ -1,5 +1,8 @@
 package com.example.rbcassignment.model;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.rbc.rbcaccountlibrary.Account;
 import com.rbc.rbcaccountlibrary.AccountProvider;
 import com.rbc.rbcaccountlibrary.Transaction;
@@ -16,21 +19,25 @@ public class BankAccount {
         this.account = account;
     }
 
-    public Account getAccount() {
+    public Account getAccountDetails() {
         return this.account;
     }
 
-    public List<Transaction> getTransactionList() {
+    public LiveData<List<Transaction>> getTransactionList() {
+        MutableLiveData<List<Transaction>> data = new MutableLiveData<>();
         if (this.transactionList == null) {
             // TODO: Fix being unable to get transaction error
-//            try {
-//                this.transactionList = AccountProvider.INSTANCE.getTransactions(this.account.getNumber());
-//            } catch (Exception e) {
-//                this.transactionList = new ArrayList<>();
-//                return this.transactionList;
-//            }
-            this.transactionList = new ArrayList<>();
+            try {
+                this.transactionList = AccountProvider.INSTANCE
+                        .getTransactions(this.account.getNumber());
+            } catch (Exception e) {
+                this.transactionList = new ArrayList<>();
+                data.setValue(this.transactionList);
+                return data;
+            }
+//            this.transactionList = new ArrayList<>();
         }
-        return this.transactionList;
+        data.setValue(this.transactionList);
+        return data;
     }
 }

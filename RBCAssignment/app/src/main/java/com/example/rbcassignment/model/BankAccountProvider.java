@@ -17,7 +17,7 @@ public class BankAccountProvider {
     private final List<Account> accountList = AccountProvider.INSTANCE.getAccountsList();
 
     private List<BankAccount> chequingAccList;
-    private List<CreditCardBankAccount> creditCardAccList;
+    private List<BankAccount> creditCardAccList;
     private List<BankAccount> loanAccList;
     private List<BankAccount> mortgageAccList;
 
@@ -43,8 +43,7 @@ public class BankAccountProvider {
 //    }
 
     /**
-     * Finds and returns a List of accounts for only of AccountType that are not
-     * CREDIT_CARD
+     * Finds and returns a List of BankAccounts for only of AccountType
      * @param type
      * @return
      */
@@ -71,7 +70,7 @@ public class BankAccountProvider {
 //        return this.chequingAccList;
 //    }
 
-    public LiveData<List<BankAccount>> getLiveChequingAccounts() {
+    public LiveData<List<BankAccount>> getChequingAccountList() {
         MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.chequingAccList == null) {
             this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
@@ -92,15 +91,25 @@ public class BankAccountProvider {
 //        return this.creditCardAccList;
 //    }
 
-    public LiveData<List<CreditCardBankAccount>> getCreditCardAccountList() {
-        MutableLiveData<List<CreditCardBankAccount>> data = new MutableLiveData<>();
+    // TODO: Delete later?
+//    public LiveData<List<CreditCardBankAccount>> getCreditCardAccountList() {
+//        MutableLiveData<List<CreditCardBankAccount>> data = new MutableLiveData<>();
+//        if (this.creditCardAccList == null) {
+//            this.creditCardAccList = new ArrayList<>();
+//            for (Account account : this.accountList) {
+//                if (isCreditCard(account)) {
+//                    this.creditCardAccList.add(new CreditCardBankAccount(account));
+//                }
+//            }
+//        }
+//        data.setValue(this.creditCardAccList);
+//        return data;
+//    }
+
+    public LiveData<List<BankAccount>> getCreditCardAccountList() {
+        MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.creditCardAccList == null) {
-            this.creditCardAccList = new ArrayList<>();
-            for (Account account : this.accountList) {
-                if (isCreditCard(account)) {
-                    this.creditCardAccList.add(new CreditCardBankAccount(account));
-                }
-            }
+            this.creditCardAccList = this.getTypeOfAccountList(AccountType.CREDIT_CARD);
         }
         data.setValue(this.creditCardAccList);
         return data;

@@ -67,10 +67,10 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
          * Set values to views and the view holders onClickListener
          */
         public void bind(BankAccount account) {
-            this.accountNameTv.setText(account.getAccount().getName());
-            this.accountNumTv.setText(account.getAccount().getNumber());
+            this.accountNameTv.setText(account.getAccountDetails().getName());
+            this.accountNumTv.setText(account.getAccountDetails().getNumber());
             this.accountBalanceTv.setText(BankAccountViewModel
-                                 .displayBalance(account.getAccount().getBalance()));
+                                 .displayBalance(account.getAccountDetails().getBalance()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

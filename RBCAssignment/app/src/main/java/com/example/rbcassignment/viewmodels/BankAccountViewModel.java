@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.rbcassignment.model.BankAccount;
 import com.example.rbcassignment.model.BankAccountProvider;
-import com.example.rbcassignment.model.CreditCardBankAccount;
 import com.rbc.rbcaccountlibrary.Account;
 
 import java.util.List;
@@ -18,12 +17,12 @@ public class BankAccountViewModel extends ViewModel {
     public MutableLiveData<List<Account>> mAccounts = new MutableLiveData<>();
 
     private LiveData<List<BankAccount>> chequingData;
-    private LiveData<List<CreditCardBankAccount>> creditData;
+    private LiveData<List<BankAccount>> creditData;
     private LiveData<List<BankAccount>> loanData;
     private LiveData<List<BankAccount>> mortgageData;
 
     public BankAccountViewModel() {
-        this.chequingData = bankAccountProvider.getLiveChequingAccounts();
+        this.chequingData = bankAccountProvider.getChequingAccountList();
         this.creditData = bankAccountProvider.getCreditCardAccountList();
         this.loanData = bankAccountProvider.getLoanAccountList();
         this.mortgageData = bankAccountProvider.getMortgageAccountList();
@@ -33,7 +32,7 @@ public class BankAccountViewModel extends ViewModel {
         return this.chequingData;
     }
 
-    public LiveData<List<CreditCardBankAccount>> getCreditCardData() {
+    public LiveData<List<BankAccount>> getCreditCardData() {
         return this.creditData;
     }
 
