@@ -25,10 +25,24 @@ public class BankAccount {
         return this.account;
     }
 
-    public LiveData<List<Transaction>> getTransactionList() {
-        MutableLiveData<List<Transaction>> data = new MutableLiveData<>();
+//    public LiveData<List<Transaction>> getTransactionList() {
+//        MutableLiveData<List<Transaction>> data = new MutableLiveData<>();
+//        if (this.transactionList == null) {
+//            // TODO: Fix being unable to get transaction error
+//            try {
+//                this.transactionList = AccountProvider.INSTANCE
+//                        .getTransactions(this.account.getNumber());
+//            } catch (Exception e) {
+//                Log.e("TRANSACTION ERROR", e.getMessage());
+//                this.transactionList = new ArrayList<>();
+//            }
+//        }
+//        data.setValue(this.transactionList);
+//        return data;
+//    }
+
+    public List<Transaction> getTransactionList() {
         if (this.transactionList == null) {
-            // TODO: Fix being unable to get transaction error
             try {
                 this.transactionList = AccountProvider.INSTANCE
                         .getTransactions(this.account.getNumber());
@@ -37,7 +51,6 @@ public class BankAccount {
                 this.transactionList = new ArrayList<>();
             }
         }
-        data.setValue(this.transactionList);
-        return data;
+        return this.transactionList;
     }
 }

@@ -60,23 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         chequingRv.setLayoutManager(layoutManager);
 
-        // TODO: TESTING
-        Log.i("LIVEDATA CHEQ", this.bankAccountViewModel.getChequingData().getValue().get(0).getAccountDetails().getBalance());
-//        BankAccountProvider a = new BankAccountProvider();
-//        List<BankAccount> c = null;
-//        try {
-//            c = a.getChequingAccountList();
-//            Log.i("CHEQUING", c.get(0).getAccount().getNumber());
-////            Log.i("CHEQUING TRANS", c.get(0).getTransactionList().toString());
-////            List<CreditCardBankAccount> cc = a.getCreditCardAccountList();
-////            Log.i("CC", cc.toString());
-////            Log.i("CC TRANS", cc.get(0).getAdditionalTransactionList().toString());
-////            List<Transaction> trans = AccountProvider.INSTANCE.getTransactions(c.get(0).getAccount().getNumber());
-////            Log.i("Trans", trans.toString());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
 
     }
 }

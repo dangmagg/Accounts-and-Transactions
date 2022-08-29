@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,14 +67,28 @@ public class AccountDetailActivity extends AppCompatActivity {
     private void displayTransactions() {
 //        Log.i("TRANS", this.accountDetailViewModel.getTransaction(number, type).getValue().toString());
         RecyclerView transactionRv = findViewById(R.id.transaction_rv);
-        List<Transaction> list = this.accountDetailViewModel
-                                     .getTransaction(this.number, this.type)
-                                     .getValue();
-        if ((list != null) && !list.isEmpty()) {
-            TransactionRVAdapter transAdapter = new TransactionRVAdapter(list);
-            transactionRv.setAdapter(transAdapter);
-            transactionRv.setLayoutManager(this.layoutManager);
-        }
+
+        this.accountDetailViewModel.runTransHandler(this.number, this.type);
+        this.accountDetailViewModel.getTransaction().observe(this, new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> list) {
+                // Display list of transactions
+                if ((list != null) && !list.isEmpty()) {
+                    TransactionRVAdapter transAdapter = new TransactionRVAdapter(list);
+                    transactionRv.setAdapter(transAdapter);
+                }
+            }
+        });
+        transactionRv.setLayoutManager(this.layoutManager);
+
+//        List<Transaction> list = this.accountDetailViewModel
+//                                     .getTransaction()
+//                                     .getValue();
+//        if ((list != null) && !list.isEmpty()) {
+//            TransactionRVAdapter transAdapter = new TransactionRVAdapter(list);
+//            transactionRv.setAdapter(transAdapter);
+//            transactionRv.setLayoutManager(this.layoutManager);
+//        }
     }
 
 }

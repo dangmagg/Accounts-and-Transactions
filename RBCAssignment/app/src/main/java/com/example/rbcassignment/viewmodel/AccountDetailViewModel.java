@@ -1,6 +1,8 @@
 package com.example.rbcassignment.viewmodel;
 
 import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,24 +24,54 @@ public class AccountDetailViewModel extends ViewModel {
 
     private final BankAccountProvider bankAccountProvider = new BankAccountProvider();
 
-    public LiveData<List<Transaction>> getTransaction(String accountNum, String type) {
-        BankAccount account = getBankAccount(accountNum, type);
-        if (account != null) {
-            return account.getTransactionList();
+    private MutableLiveData<List<Transaction>> transListData;
+    private MutableLiveData<List<Transaction>> additionalTransListData;
+
+    public LiveData<List<Transaction>> getTransaction() {
+        if (this.transListData == null) {
+            this.transListData = new MutableLiveData<>();
         }
-        return null;
+        return this.transListData;
     }
 
     /**
      * Additional transactions are only available to Credit Card type accounts
      */
     public LiveData<List<Transaction>> getAdditionalTransaction(String accountNum, String type) {
-        BankAccount account = getBankAccount(accountNum, type);
-        if ((account != null) && isCreditCard(type)) {
-            CreditCardBankAccount creditAccount = new CreditCardBankAccount(account.getAccountDetails());
-            return creditAccount.getAdditionalTransactionList();
+        if (this.additionalTransListData == null) {
+            this.additionalTransListData = new MutableLiveData<>();
         }
-        return null;
+        return this.additionalTransListData;
+    }
+
+    /**
+     * Start a background thread to fetch transaction data
+     */
+    public void runTransHandler(String accountNum, String type) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                BankAccount account = getBankAccount(accountNum, type);
+                if (account != null) {
+                    List<Transaction> list = account.getTransactionList();
+                    transListData.setValue(list);
+                }
+            }
+        });
+    }
+
+    public void runAdditionalTransHandler(String accountNum, String type) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                BankAccount account = getBankAccount(accountNum, type);
+                if ((account != null) && isCreditCard(type)) {
+                    CreditCardBankAccount creditAccount = new CreditCardBankAccount(account.getAccountDetails());
+                    List<Transaction> list = creditAccount.getAdditionalTransactionList();
+                    additionalTransListData.setValue(list);
+                }
+            }
+        });
     }
 
     private boolean isCreditCard(String type) {
@@ -50,7 +82,7 @@ public class AccountDetailViewModel extends ViewModel {
      * Find and return BankAccount of the corresponding account number
      */
     private BankAccount getBankAccount(String accountNum, String type) {
-        LiveData<List<BankAccount>> accountList = new MutableLiveData<>();
+        LiveData<List<BankAccount>> accountList;
         switch (AccountType.valueOf(type)) {
             case CHEQUING:
                 accountList = bankAccountProvider.getChequingAccountList();
