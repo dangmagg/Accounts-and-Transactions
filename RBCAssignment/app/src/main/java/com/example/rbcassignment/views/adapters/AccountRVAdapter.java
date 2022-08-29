@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.AccountViewHolder> {
 
-    private List<BankAccount> accountList;
+    private final List<BankAccount> accountList;
     private OnAccountClickListener listener;
 
     public AccountRVAdapter(List<BankAccount> accountList) {
@@ -60,7 +60,7 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
             super(itemView);
             this.accountNameTv = itemView.findViewById(R.id.item_title_tv);
             this.accountNumTv = itemView.findViewById(R.id.item_subtitle_tv);
-            this.accountBalanceTv = itemView.findViewById(R.id.item_balance_tv);
+            this.accountBalanceTv = itemView.findViewById(R.id.item_amount_tv);
         }
 
         /**
@@ -70,13 +70,8 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
             this.accountNameTv.setText(account.getAccountDetails().getName());
             this.accountNumTv.setText(account.getAccountDetails().getNumber());
             this.accountBalanceTv.setText(BankAccountViewModel
-                                 .displayBalance(account.getAccountDetails().getBalance()));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onAccountClick(account);
-                }
-            });
+                                 .formatBalance(account.getAccountDetails().getBalance()));
+            itemView.setOnClickListener(view -> listener.onAccountClick(account));
         }
     }
 

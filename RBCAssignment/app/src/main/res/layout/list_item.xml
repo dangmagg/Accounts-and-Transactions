@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/item_title_tv" />
 
     <TextView
-        android:id="@+id/item_balance_tv"
+        android:id="@+id/item_amount_tv"
         android:layout_width="210dp"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
@@ -52,5 +52,5 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_balance_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/item_amount_tv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

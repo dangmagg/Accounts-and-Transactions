@@ -2,19 +2,22 @@ package com.example.rbcassignment.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rbcassignment.R;
 import com.example.rbcassignment.viewmodels.AccountDetailViewModel;
 import com.example.rbcassignment.viewmodels.BankAccountViewModel;
+import com.example.rbcassignment.views.adapters.TransactionRVAdapter;
 
 public class AccountDetailActivity extends AppCompatActivity {
 
+    LinearLayoutManager layoutManager;
     AccountDetailViewModel accountDetailViewModel;
 
     private String name;
@@ -27,6 +30,8 @@ public class AccountDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_detail_layout);
 
+        this.layoutManager = new LinearLayoutManager(AccountDetailActivity.this);
+
         this.accountDetailViewModel = new ViewModelProvider(this)
                 .get(AccountDetailViewModel.class);
 
@@ -38,9 +43,7 @@ public class AccountDetailActivity extends AppCompatActivity {
         this.type = intent.getStringExtra(MainActivity.EXTRA_ACCOUNT_TYPE);
 
         displayAccountDetails();
-
-        // Transactions
-        Log.i("TRANS", this.accountDetailViewModel.getTransaction(number, type).getValue().toString());
+        displayTransactions();
 
     }
 
@@ -50,6 +53,16 @@ public class AccountDetailActivity extends AppCompatActivity {
         TextView balanceTv = findViewById(R.id.account_detail_bal_tv);
         nameTv.setText(this.name);
         numberTv.setText(this.number);
-        balanceTv.setText(BankAccountViewModel.displayBalance(this.balance));
+        balanceTv.setText(BankAccountViewModel.formatBalance(this.balance));
+    }
+
+    private void displayTransactions() {
+//        Log.i("TRANS", this.accountDetailViewModel.getTransaction(number, type).getValue().toString());
+        RecyclerView transactionRv = findViewById(R.id.transaction_rv);
+        TransactionRVAdapter transAdapter = new TransactionRVAdapter(this.accountDetailViewModel
+                                                                         .getTransaction(this.number, this.type)
+                                                                         .getValue());
+        transactionRv.setAdapter(transAdapter);
+        transactionRv.setLayoutManager(this.layoutManager);
     }
 }

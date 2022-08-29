@@ -1,5 +1,7 @@
 package com.example.rbcassignment.viewmodels;
 
+import android.annotation.SuppressLint;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,6 +12,11 @@ import com.example.rbcassignment.model.CreditCardBankAccount;
 import com.rbc.rbcaccountlibrary.AccountType;
 import com.rbc.rbcaccountlibrary.Transaction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,5 +76,23 @@ public class AccountDetailViewModel extends ViewModel {
             }
         }
         return null;
+    }
+
+    /**
+     * Formats amount to display on view
+     */
+    public static String formatAmount(String amount) {
+        return BankAccountViewModel.formatBalance(amount);
+    }
+
+    /**
+     * Formats date to display on transaction list item
+     * @param calendar date of transaction
+     * @return String
+     */
+    public static String formatDate(Calendar calendar) {
+        @SuppressLint("SimpleDateFormat")
+        DateFormat formatter = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss");
+        return formatter.format(calendar.getTime());
     }
 }

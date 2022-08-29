@@ -48,7 +48,7 @@ public class BankAccountViewModel extends ViewModel {
      * Formats balance to display on view
      * @return
      */
-    public static String displayBalance(String balance) {
+    public static String formatBalance(String balance) {
         return "$ " + balance;
     }
 
