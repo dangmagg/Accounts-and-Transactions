@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/account_name_tv"
+        android:id="@+id/item_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/account_number_tv"
+        android:id="@+id/item_subtitle_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -26,10 +26,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_name_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/item_title_tv" />
 
     <TextView
-        android:id="@+id/account_balance_tv"
+        android:id="@+id/item_balance_tv"
         android:layout_width="210dp"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/account_name_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_title_tv"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -52,5 +52,5 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_balance_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/item_balance_tv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

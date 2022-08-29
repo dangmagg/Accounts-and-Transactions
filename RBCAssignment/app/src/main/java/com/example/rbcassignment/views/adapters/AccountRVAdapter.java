@@ -28,7 +28,7 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
     public AccountViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater
                         .from(parent.getContext())
-                        .inflate(R.layout.account_list_item, parent, false);
+                        .inflate(R.layout.list_item, parent, false);
         return new AccountViewHolder(view);
     }
 
@@ -52,15 +52,15 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
      */
     class AccountViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView accountNameTv;
-        private TextView accountNumTv;
-        private TextView accountBalanceTv;
+        private final TextView accountNameTv;
+        private final TextView accountNumTv;
+        private final TextView accountBalanceTv;
 
         public AccountViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.accountNameTv = itemView.findViewById(R.id.account_name_tv);
-            this.accountNumTv = itemView.findViewById(R.id.account_number_tv);
-            this.accountBalanceTv = itemView.findViewById(R.id.account_balance_tv);
+            this.accountNameTv = itemView.findViewById(R.id.item_title_tv);
+            this.accountNumTv = itemView.findViewById(R.id.item_subtitle_tv);
+            this.accountBalanceTv = itemView.findViewById(R.id.item_balance_tv);
         }
 
         /**
