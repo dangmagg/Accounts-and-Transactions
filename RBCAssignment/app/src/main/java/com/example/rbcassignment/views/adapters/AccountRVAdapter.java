@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rbcassignment.R;
 import com.example.rbcassignment.model.BankAccount;
+import com.example.rbcassignment.viewmodels.BankAccountViewModel;
 
 import java.util.List;
 
@@ -47,14 +48,6 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
     }
 
     /**
-     * Formats balance to display on view
-     * @return
-     */
-    private String displayBalance(String balance) {
-        return "$ " + balance;
-    }
-
-    /**
      * Used to initialize the views in the recycler view
      */
     class AccountViewHolder extends RecyclerView.ViewHolder {
@@ -76,7 +69,8 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
         public void bind(BankAccount account) {
             this.accountNameTv.setText(account.getAccount().getName());
             this.accountNumTv.setText(account.getAccount().getNumber());
-            this.accountBalanceTv.setText(displayBalance(account.getAccount().getBalance()));
+            this.accountBalanceTv.setText(BankAccountViewModel
+                                 .displayBalance(account.getAccount().getBalance()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

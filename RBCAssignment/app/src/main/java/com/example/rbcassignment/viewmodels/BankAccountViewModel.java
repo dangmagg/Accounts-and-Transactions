@@ -45,4 +45,12 @@ public class BankAccountViewModel extends ViewModel {
         return this.mortgageData;
     }
 
+    /**
+     * Formats balance to display on view
+     * @return
+     */
+    public static String displayBalance(String balance) {
+        return "$ " + balance;
+    }
+
 }

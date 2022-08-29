@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/account_detail_name_tv"
-        android:layout_width="211dp"
-        android:layout_height="38dp"
+        android:layout_width="204dp"
+        android:layout_height="47dp"
         android:layout_marginTop="24dp"
         android:text="@string/default_title"
         android:textAlignment="center"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/default_title"
         android:textAlignment="center"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/account_detail_name_tv" />
@@ -59,6 +59,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/latest_transaction"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
