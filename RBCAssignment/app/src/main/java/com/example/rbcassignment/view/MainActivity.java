@@ -1,6 +1,7 @@
 package com.example.rbcassignment.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.rbcassignment.R;
+import com.example.rbcassignment.databinding.ActivityMainBinding;
 import com.example.rbcassignment.viewmodel.BankAccountViewModel;
 import com.example.rbcassignment.view.adapter.AccountRVAdapter;
 
@@ -25,14 +27,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        // Binding ViewModel
+        this.bankAccountViewModel = new ViewModelProvider(this)
+                .get(BankAccountViewModel.class);
+        binding.setBankAccountViewModel(this.bankAccountViewModel);
+        binding.setLifecycleOwner(this);
 
         // Layout Manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-
-        // Livedata
-        this.bankAccountViewModel = new ViewModelProvider(this)
-                .get(BankAccountViewModel.class);
 
         // Initialize Recycler Views
         RecyclerView chequingRv = findViewById(R.id.chequing_rv);

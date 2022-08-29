@@ -6,14 +6,19 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rbcassignment.R;
+import com.example.rbcassignment.databinding.AccountDetailLayoutBinding;
 import com.example.rbcassignment.viewmodel.AccountDetailViewModel;
 import com.example.rbcassignment.viewmodel.BankAccountViewModel;
 import com.example.rbcassignment.view.adapter.TransactionRVAdapter;
+import com.rbc.rbcaccountlibrary.Transaction;
+
+import java.util.List;
 
 public class AccountDetailActivity extends AppCompatActivity {
 
@@ -28,12 +33,14 @@ public class AccountDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.account_detail_layout);
+        AccountDetailLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.account_detail_layout);
 
         this.layoutManager = new LinearLayoutManager(AccountDetailActivity.this);
 
         this.accountDetailViewModel = new ViewModelProvider(this)
                 .get(AccountDetailViewModel.class);
+        binding.setAccountDetailViewModel(this.accountDetailViewModel);
+        binding.setLifecycleOwner(this);
 
         Intent intent = getIntent();
 
@@ -59,10 +66,14 @@ public class AccountDetailActivity extends AppCompatActivity {
     private void displayTransactions() {
 //        Log.i("TRANS", this.accountDetailViewModel.getTransaction(number, type).getValue().toString());
         RecyclerView transactionRv = findViewById(R.id.transaction_rv);
-        TransactionRVAdapter transAdapter = new TransactionRVAdapter(this.accountDetailViewModel
-                                                                         .getTransaction(this.number, this.type)
-                                                                         .getValue());
-        transactionRv.setAdapter(transAdapter);
-        transactionRv.setLayoutManager(this.layoutManager);
+        List<Transaction> list = this.accountDetailViewModel
+                                     .getTransaction(this.number, this.type)
+                                     .getValue();
+        if ((list != null) && !list.isEmpty()) {
+            TransactionRVAdapter transAdapter = new TransactionRVAdapter(list);
+            transactionRv.setAdapter(transAdapter);
+            transactionRv.setLayoutManager(this.layoutManager);
+        }
     }
+
 }
