@@ -50,7 +50,6 @@ public class BankAccountProvider {
     private List<BankAccount> getTypeOfAccountList(AccountType type) {
         List<BankAccount> list = new ArrayList<>();
         for (Account account : this.accountList) {
-//            Log.i("ACCOUNT", account.toString());
             if (account.getType() == type) {
                 list.add(new BankAccount(account));
             }

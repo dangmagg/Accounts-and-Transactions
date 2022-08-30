@@ -40,7 +40,7 @@ public class AccountRVAdapter extends RecyclerView.Adapter<AccountRVAdapter.Acco
 
     @Override
     public int getItemCount() {
-        return this.accountList.size();
+        return this.accountList != null ? this.accountList.size() : 0;
     }
 
     public void setOnClickListener(OnAccountClickListener listener) {
