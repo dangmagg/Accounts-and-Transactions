@@ -1,5 +1,7 @@
 package com.example.rbcassignment.viewmodel;
 
+import android.os.Handler;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,24 +14,20 @@ import java.util.List;
 
 public class BankAccountViewModel extends ViewModel {
 
-    private BankAccountProvider bankAccountProvider = new BankAccountProvider();
+    private final BankAccountProvider bankAccountProvider = new BankAccountProvider();
 
     public MutableLiveData<List<BankAccount>> selectedAccountsData;
 
-    private final LiveData<List<BankAccount>> chequingData;
-    private final LiveData<List<BankAccount>> creditData;
-    private final LiveData<List<BankAccount>> loanData;
-    private final LiveData<List<BankAccount>> mortgageData;
+    private MutableLiveData<List<BankAccount>> chequingData;
+    private MutableLiveData<List<BankAccount>> creditData;
+    private MutableLiveData<List<BankAccount>> loanData;
+    private MutableLiveData<List<BankAccount>> mortgageData;
 
     public BankAccountViewModel() {
-        this.chequingData = bankAccountProvider.getChequingAccountList();
-        this.creditData = bankAccountProvider.getCreditCardAccountList();
-        this.loanData = bankAccountProvider.getLoanAccountList();
-        this.mortgageData = bankAccountProvider.getMortgageAccountList();
     }
 
     /**
-     * Provides the list of accounts for currently selected type
+     * Provides the list of accounts for currently selected type to display on view
      */
     public LiveData<List<BankAccount>> getSelectedAccountsData() {
         if (this.selectedAccountsData == null) {
@@ -41,34 +39,79 @@ public class BankAccountViewModel extends ViewModel {
     public void setSelectedAccountsData(AccountType type) {
         switch (type) {
             case CHEQUING:
-                this.selectedAccountsData.setValue(this.chequingData.getValue());
+                this.selectedAccountsData.setValue(this.getChequingData().getValue());
                 break;
             case CREDIT_CARD:
-                this.selectedAccountsData.setValue(this.creditData.getValue());
+                this.selectedAccountsData.setValue(this.getCreditCardData().getValue());
                 break;
             case LOAN:
-                this.selectedAccountsData.setValue(this.loanData.getValue());
+                this.selectedAccountsData.setValue(this.getLoanData().getValue());
                 break;
             case MORTGAGE:
-                this.selectedAccountsData.setValue(this.mortgageData.getValue());
+                this.selectedAccountsData.setValue(this.getMortgageData().getValue());
                 break;
         }
     }
 
     public LiveData<List<BankAccount>> getChequingData() {
+        if (this.chequingData == null) {
+            this.runAccountHandler(AccountType.CHEQUING);
+            this.chequingData = new MutableLiveData<>();
+        }
         return this.chequingData;
     }
 
     public LiveData<List<BankAccount>> getCreditCardData() {
+        if (this.creditData == null) {
+            this.runAccountHandler(AccountType.CREDIT_CARD);
+            this.creditData = new MutableLiveData<>();
+        }
         return this.creditData;
     }
 
     public LiveData<List<BankAccount>> getLoanData() {
+        if (this.loanData == null) {
+            this.runAccountHandler(AccountType.LOAN);
+            this.loanData = new MutableLiveData<>();
+        }
         return this.loanData;
     }
 
     public LiveData<List<BankAccount>> getMortgageData() {
+        if (this.mortgageData == null) {
+            this.runAccountHandler(AccountType.MORTGAGE);
+            this.mortgageData = new MutableLiveData<>();
+        }
         return this.mortgageData;
+    }
+
+    /**
+     * Background service call to get the required list of bank account by type
+     * @param type AccountType
+     */
+    private void runAccountHandler(AccountType type) {
+        new Handler().post(() -> {
+            LiveData<List<BankAccount>> list;
+            switch (type) {
+                case CHEQUING:
+                    list = bankAccountProvider.getChequingAccountList();
+                    chequingData.setValue(list.getValue());
+                    break;
+                case CREDIT_CARD:
+                    list = bankAccountProvider.getCreditCardAccountList();
+                    creditData.setValue(list.getValue());
+                    break;
+                case LOAN:
+                    list = bankAccountProvider.getLoanAccountList();
+                    loanData.setValue(list.getValue());
+                    break;
+                case MORTGAGE:
+                    list = bankAccountProvider.getMortgageAccountList();
+                    mortgageData.setValue(list.getValue());
+                    break;
+            }
+            setSelectedAccountsData(type);
+        });
     }
 
 
