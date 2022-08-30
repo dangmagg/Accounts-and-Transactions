@@ -37,7 +37,7 @@ public class AccountDetailViewModel extends ViewModel {
     /**
      * Additional transactions are only available to Credit Card type accounts
      */
-    public LiveData<List<Transaction>> getAdditionalTransaction(String accountNum, String type) {
+    public LiveData<List<Transaction>> getAdditionalTransaction() {
         if (this.additionalTransListData == null) {
             this.additionalTransListData = new MutableLiveData<>();
         }
@@ -74,7 +74,7 @@ public class AccountDetailViewModel extends ViewModel {
         });
     }
 
-    private boolean isCreditCard(String type) {
+    public boolean isCreditCard(String type) {
         return AccountType.valueOf(type) == AccountType.CREDIT_CARD;
     }
 

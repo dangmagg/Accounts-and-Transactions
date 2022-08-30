@@ -39,16 +39,16 @@ public class BankAccountViewModel extends ViewModel {
     public void setSelectedAccountsData(AccountType type) {
         switch (type) {
             case CHEQUING:
-                this.selectedAccountsData.setValue(this.getChequingData().getValue());
+                this.selectedAccountsData.setValue(getChequingData().getValue());
                 break;
             case CREDIT_CARD:
-                this.selectedAccountsData.setValue(this.getCreditCardData().getValue());
+                this.selectedAccountsData.setValue(getCreditCardData().getValue());
                 break;
             case LOAN:
-                this.selectedAccountsData.setValue(this.getLoanData().getValue());
+                this.selectedAccountsData.setValue(getLoanData().getValue());
                 break;
             case MORTGAGE:
-                this.selectedAccountsData.setValue(this.getMortgageData().getValue());
+                this.selectedAccountsData.setValue(getMortgageData().getValue());
                 break;
         }
     }

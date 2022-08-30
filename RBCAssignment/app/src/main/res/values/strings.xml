@@ -7,4 +7,5 @@
     <string name="loan">Loan</string>
     <string name="mortgage">Mortgage</string>
     <string name="latest_transaction">Latest Transactions:</string>
+    <string name="additional_transaction">Additional Transactions:</string>
 </resources>

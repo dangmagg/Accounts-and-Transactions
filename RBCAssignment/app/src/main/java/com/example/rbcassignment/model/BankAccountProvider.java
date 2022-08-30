@@ -72,7 +72,7 @@ public class BankAccountProvider {
     public LiveData<List<BankAccount>> getChequingAccountList() {
         MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.chequingAccList == null) {
-            this.chequingAccList = this.getTypeOfAccountList(AccountType.CHEQUING);
+            this.chequingAccList = getTypeOfAccountList(AccountType.CHEQUING);
         }
         data.setValue(this.chequingAccList);
         return data;
@@ -108,7 +108,7 @@ public class BankAccountProvider {
     public LiveData<List<BankAccount>> getCreditCardAccountList() {
         MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.creditCardAccList == null) {
-            this.creditCardAccList = this.getTypeOfAccountList(AccountType.CREDIT_CARD);
+            this.creditCardAccList = getTypeOfAccountList(AccountType.CREDIT_CARD);
         }
         data.setValue(this.creditCardAccList);
         return data;
@@ -124,7 +124,7 @@ public class BankAccountProvider {
     public LiveData<List<BankAccount>> getLoanAccountList() {
         MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.loanAccList == null) {
-            this.loanAccList = this.getTypeOfAccountList(AccountType.LOAN);
+            this.loanAccList = getTypeOfAccountList(AccountType.LOAN);
         }
         data.setValue(this.loanAccList);
         return data;
@@ -140,7 +140,7 @@ public class BankAccountProvider {
     public LiveData<List<BankAccount>> getMortgageAccountList() {
         MutableLiveData<List<BankAccount>> data = new MutableLiveData<>();
         if (this.mortgageAccList == null) {
-            this.mortgageAccList = this.getTypeOfAccountList(AccountType.MORTGAGE);
+            this.mortgageAccList = getTypeOfAccountList(AccountType.MORTGAGE);
         }
         data.setValue(this.mortgageAccList);
         return data;

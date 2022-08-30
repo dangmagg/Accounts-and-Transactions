@@ -2,10 +2,13 @@ package com.example.rbcassignment.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +19,9 @@ import com.example.rbcassignment.databinding.AccountDetailLayoutBinding;
 import com.example.rbcassignment.viewmodel.AccountDetailViewModel;
 import com.example.rbcassignment.viewmodel.BankAccountViewModel;
 import com.example.rbcassignment.view.adapter.TransactionRVAdapter;
+import com.rbc.rbcaccountlibrary.Transaction;
+
+import java.util.List;
 
 
 public class AccountDetailActivity extends AppCompatActivity {
@@ -47,6 +53,7 @@ public class AccountDetailActivity extends AppCompatActivity {
         this.balance = intent.getStringExtra(MainActivity.EXTRA_ACCOUNT_BALANCE);
         this.type = intent.getStringExtra(MainActivity.EXTRA_ACCOUNT_TYPE);
 
+        displayAdditionalTransView();
         displayAccountDetails();
         displayTransactions();
 
@@ -62,19 +69,55 @@ public class AccountDetailActivity extends AppCompatActivity {
     }
 
     private void displayTransactions() {
-//        Log.i("TRANS", this.accountDetailViewModel.getTransaction(number, type).getValue().toString());
         RecyclerView transactionRv = findViewById(R.id.transaction_rv);
-
         this.accountDetailViewModel.runTransHandler(this.number, this.type);
         this.accountDetailViewModel.getTransaction().observe(this, list -> {
             // Display list of transactions
-            if ((list != null) && !list.isEmpty()) {
-                TransactionRVAdapter transAdapter = new TransactionRVAdapter(list);
-                transactionRv.setAdapter(transAdapter);
-            }
+            setRvAdapter(list, transactionRv);
         });
         transactionRv.setLayoutManager(this.layoutManager);
 
+        // Additional Transactions
+        if (isCreditCard()) {
+            LinearLayoutManager lm = new LinearLayoutManager(AccountDetailActivity.this);
+            RecyclerView addTransRv = findViewById(R.id.additional_trans_rv);
+            this.accountDetailViewModel.runAdditionalTransHandler(this.number, this.type);
+            this.accountDetailViewModel.getAdditionalTransaction().observe(this, list -> {
+                // Display additional transactions
+                setRvAdapter(list, addTransRv);
+            });
+            addTransRv.setLayoutManager(lm);
+        }
+    }
+
+    /**
+     * Unhides additional transaction views only for credit card accounts
+     */
+    private void displayAdditionalTransView() {
+        if (isCreditCard()) {
+            ConstraintLayout layout = findViewById(R.id.additional_trans_layout);
+            layout.setVisibility(View.VISIBLE);
+        } else {
+            // Extend height of transaction recycler list view
+            RecyclerView rv = findViewById(R.id.transaction_rv);
+            rv.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        }
+    }
+
+    /**
+     * Given a transaction list, display the contents to recycler view
+     * @param list Transaction list
+     * @param rv Recycler View
+     */
+    private void setRvAdapter(List<Transaction> list, RecyclerView rv) {
+        if ((list != null) && !list.isEmpty()) {
+            TransactionRVAdapter transAdapter = new TransactionRVAdapter(list);
+            rv.setAdapter(transAdapter);
+        }
+    }
+
+    private boolean isCreditCard() {
+        return this.accountDetailViewModel.isCreditCard(this.type);
     }
 
 }
