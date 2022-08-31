@@ -23,9 +23,6 @@ public class BankAccountViewModel extends ViewModel {
     private MutableLiveData<List<BankAccount>> loanData;
     private MutableLiveData<List<BankAccount>> mortgageData;
 
-    public BankAccountViewModel() {
-    }
-
     /**
      * Provides the list of accounts for currently selected type to display on view
      */
@@ -91,23 +88,23 @@ public class BankAccountViewModel extends ViewModel {
      */
     private void runAccountHandler(AccountType type) {
         new Handler().post(() -> {
-            LiveData<List<BankAccount>> list;
+            List<BankAccount> list;
             switch (type) {
                 case CHEQUING:
                     list = bankAccountProvider.getChequingAccountList();
-                    chequingData.setValue(list.getValue());
+                    chequingData.setValue(list);
                     break;
                 case CREDIT_CARD:
                     list = bankAccountProvider.getCreditCardAccountList();
-                    creditData.setValue(list.getValue());
+                    creditData.setValue(list);
                     break;
                 case LOAN:
                     list = bankAccountProvider.getLoanAccountList();
-                    loanData.setValue(list.getValue());
+                    loanData.setValue(list);
                     break;
                 case MORTGAGE:
                     list = bankAccountProvider.getMortgageAccountList();
-                    mortgageData.setValue(list.getValue());
+                    mortgageData.setValue(list);
                     break;
             }
             setSelectedAccountsData(type);

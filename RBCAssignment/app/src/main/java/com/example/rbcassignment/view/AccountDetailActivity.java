@@ -70,7 +70,7 @@ public class AccountDetailActivity extends AppCompatActivity {
 
     private void displayTransactions() {
         RecyclerView transactionRv = findViewById(R.id.transaction_rv);
-        this.accountDetailViewModel.runTransHandler(this.number, this.type);
+        this.accountDetailViewModel.executeTransThread(this.number, this.type);
         this.accountDetailViewModel.getTransaction().observe(this, list -> {
             // Display list of transactions
             setRvAdapter(list, transactionRv);
@@ -81,17 +81,18 @@ public class AccountDetailActivity extends AppCompatActivity {
         if (isCreditCard()) {
             LinearLayoutManager lm = new LinearLayoutManager(AccountDetailActivity.this);
             RecyclerView addTransRv = findViewById(R.id.additional_trans_rv);
-            this.accountDetailViewModel.runAdditionalTransHandler(this.number, this.type);
+            this.accountDetailViewModel.executeAdditionalTransThread(this.number, this.type);
             this.accountDetailViewModel.getAdditionalTransaction().observe(this, list -> {
                 // Display additional transactions
                 setRvAdapter(list, addTransRv);
             });
             addTransRv.setLayoutManager(lm);
         }
+        this.accountDetailViewModel.executorShutDown();
     }
 
     /**
-     * Unhides additional transaction views only for credit card accounts
+     * Show additional transaction views only for credit card accounts
      */
     private void displayAdditionalTransView() {
         if (isCreditCard()) {

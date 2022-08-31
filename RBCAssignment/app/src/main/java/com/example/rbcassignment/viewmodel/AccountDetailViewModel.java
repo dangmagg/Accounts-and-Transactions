@@ -1,7 +1,6 @@
 package com.example.rbcassignment.viewmodel;
 
 import android.annotation.SuppressLint;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -19,10 +18,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AccountDetailViewModel extends ViewModel {
 
     private final BankAccountProvider bankAccountProvider = new BankAccountProvider();
+
+    // 2 Threads to run transactions in parallel
+    private final ExecutorService executor = Executors.newFixedThreadPool(2);
 
     private MutableLiveData<List<Transaction>> transListData;
     private MutableLiveData<List<Transaction>> additionalTransListData;
@@ -47,31 +51,29 @@ public class AccountDetailViewModel extends ViewModel {
     /**
      * Start a background thread to fetch transaction data
      */
-    public void runTransHandler(String accountNum, String type) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                BankAccount account = getBankAccount(accountNum, type);
-                if (account != null) {
-                    List<Transaction> list = account.getTransactionList();
-                    transListData.setValue(list);
-                }
+    public void executeTransThread(String accountNum, String type) {
+        this.executor.execute(() -> {
+            BankAccount account = getBankAccount(accountNum, type);
+            if (account != null) {
+                List<Transaction> list = account.getTransactionList();
+                transListData.postValue(list);
             }
         });
     }
 
-    public void runAdditionalTransHandler(String accountNum, String type) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                BankAccount account = getBankAccount(accountNum, type);
-                if ((account != null) && isCreditCard(type)) {
-                    CreditCardBankAccount creditAccount = new CreditCardBankAccount(account.getAccountDetails());
-                    List<Transaction> list = creditAccount.getAdditionalTransactionList();
-                    additionalTransListData.setValue(list);
-                }
+    public void executeAdditionalTransThread(String accountNum, String type) {
+        this.executor.execute(() -> {
+            BankAccount account = getBankAccount(accountNum, type);
+            if ((account != null) && isCreditCard(type)) {
+                CreditCardBankAccount creditAccount = new CreditCardBankAccount(account.getAccountDetails());
+                List<Transaction> list = creditAccount.getAdditionalTransactionList();
+                additionalTransListData.postValue(list);
             }
         });
+    }
+
+    public void executorShutDown() {
+        this.executor.shutdown();
     }
 
     public boolean isCreditCard(String type) {
@@ -82,7 +84,7 @@ public class AccountDetailViewModel extends ViewModel {
      * Find and return BankAccount of the corresponding account number
      */
     private BankAccount getBankAccount(String accountNum, String type) {
-        LiveData<List<BankAccount>> accountList;
+        List<BankAccount> accountList;
         switch (AccountType.valueOf(type)) {
             case CHEQUING:
                 accountList = bankAccountProvider.getChequingAccountList();
@@ -100,7 +102,7 @@ public class AccountDetailViewModel extends ViewModel {
                 return null;
         }
         // Search
-        for (BankAccount account : Objects.requireNonNull(accountList.getValue())) {
+        for (BankAccount account : Objects.requireNonNull(accountList)) {
             if (account.getAccountDetails().getNumber().equals(accountNum)) {
                 return account;
             }
