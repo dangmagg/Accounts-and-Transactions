@@ -25,9 +25,8 @@ public class TransactionRVAdapter extends RecyclerView.Adapter<TransactionRVAdap
     @NonNull
     @Override
     public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater
-                .from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                                  .inflate(R.layout.list_item, parent, false);
         return new TransactionRVAdapter.TransactionViewHolder(view);    }
 
     @Override

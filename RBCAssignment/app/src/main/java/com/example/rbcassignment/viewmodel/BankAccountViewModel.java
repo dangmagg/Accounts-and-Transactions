@@ -111,8 +111,6 @@ public class BankAccountViewModel extends ViewModel {
         });
     }
 
-
-
     /**
      * Formats balance to display on view
      * @return
