@@ -8,3 +8,9 @@
 - Contains dropdown selection for account type and transaction page for each account
 - Made with Android Studio
 - Tested on Pixel 5 API 30 Emulator
+
+### Main Activity
+![](https://i.imgur.com/tnlc7jr.png)
+
+### Account Detail Activity
+![](https://i.imgur.com/o7uasIb.png)

@@ -21,6 +21,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/default_title"
             android:textAlignment="center"
+            android:textColor="@color/purple_700"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -45,7 +46,9 @@
             android:layout_marginTop="24dp"
             android:text="@string/default_balance"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="34sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +60,7 @@
             android:layout_height="3dp"
             android:layout_marginTop="24dp"
             android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/purple_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/account_detail_bal_tv" />
@@ -68,7 +72,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/latest_transaction"
+            android:textColor="@color/teal_700"
             android:textSize="20sp"
+            android:textStyle="italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -100,6 +106,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/additional_transaction"
                 android:textSize="20sp"
+                android:textColor="@color/teal_700"
+                android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

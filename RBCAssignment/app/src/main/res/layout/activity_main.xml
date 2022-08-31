@@ -44,6 +44,7 @@
             android:layout_height="5dp"
             android:layout_marginBottom="16dp"
             android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/purple_700"
             app:layout_constraintBottom_toTopOf="@+id/accounts_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
