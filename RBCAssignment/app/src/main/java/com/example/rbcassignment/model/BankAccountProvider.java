@@ -31,7 +31,6 @@ public class BankAccountProvider {
         return list;
     }
 
-
     private boolean isCreditCard(Account account) {
         return account.getType() == AccountType.CREDIT_CARD;
     }
